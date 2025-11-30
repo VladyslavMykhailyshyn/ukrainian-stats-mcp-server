@@ -37,15 +37,56 @@ export class UkrStatAPIClient {
     /**
      * Make a GET request to the API
      */
-    private async get(path: string, params?: Record<string, any>): Promise<any> {
+    private async get(path: string, params?: Record<string, any>, acceptHeader?: string): Promise<any> {
         try {
-            const response = await this.client.get(path, { params });
+            const config: any = { params };
+            if (acceptHeader) {
+                config.headers = { Accept: acceptHeader };
+            }
+            const response = await this.client.get(path, config);
+            
+            // Check content-type to determine response format
+            const contentType = response.headers['content-type'] || '';
+            const isJSON = contentType.includes('application/json') || contentType.includes('application/vnd.sdmx.data+json');
+            
+            // Check if response is already JSON (object or string that's valid JSON)
+            if (isJSON || (typeof response.data === 'object' && response.data !== null && !Array.isArray(response.data))) {
+                // Already parsed JSON
+                return response.data;
+            }
+            
+            // Check if response is a JSON string
+            if (typeof response.data === 'string') {
+                const trimmed = response.data.trim();
+                if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+                    try {
+                        return JSON.parse(trimmed);
+                    } catch {
+                        // Not valid JSON, continue to XML parsing
+                    }
+                }
+            }
+            
+            // Otherwise parse as XML
             return this.parseXML(response.data);
         } catch (error: any) {
             if (error.response) {
-                throw new Error(
-                    `API Error: ${error.response.status} - ${error.response.statusText}`
-                );
+                // Include more error details for debugging
+                const status = error.response.status;
+                const statusText = error.response.statusText;
+                const data = error.response.data;
+                let errorMessage = `API Error: ${status} - ${statusText}`;
+                
+                // Try to extract error message from response
+                if (data) {
+                    if (typeof data === 'string' && data.length < 500) {
+                        errorMessage += `\nResponse: ${data}`;
+                    } else if (typeof data === 'object') {
+                        errorMessage += `\nResponse: ${JSON.stringify(data).substring(0, 500)}`;
+                    }
+                }
+                
+                throw new Error(errorMessage);
             }
             throw error;
         }
@@ -129,7 +170,8 @@ export class UkrStatAPIClient {
         filters?: Record<string, any>
     ): Promise<any> {
         const path = `/data/${context}/${agencyId}/${resourceId}/${version}/${key}`;
-        return this.get(path, filters);
+        // Use data-specific Accept header for data endpoints
+        return this.get(path, filters, 'application/vnd.sdmx.data+xml;version=3.0.0, application/vnd.sdmx.data+json;version=3.0.0');
     }
 
     /**
@@ -144,7 +186,8 @@ export class UkrStatAPIClient {
         filters?: Record<string, any>
     ): Promise<any> {
         const path = `/availability/${context}/${agencyId}/${resourceId}/${version}/${key}`;
-        return this.get(path, { ...filters, mode: 'exact' });
+        // Use data-specific Accept header for availability endpoints
+        return this.get(path, { ...filters, mode: 'exact' }, 'application/vnd.sdmx.data+xml;version=3.0.0, application/vnd.sdmx.data+json;version=3.0.0');
     }
 
     /**
