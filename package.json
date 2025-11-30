@@ -1,0 +1,48 @@
+{
+  "name": "ukrainian-stats-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server providing access to Ukrainian statistical data via SDMX API",
+  "main": "build/index.js",
+  "type": "module",
+  "bin": {
+    "ukrainian-stats-mcp": "build/index.js"
+  },
+  "files": [
+    "build/**/*",
+    "README.md",
+    "README.uk.md",
+    "EXAMPLES.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node build/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "ukraine",
+    "statistics",
+    "sdmx",
+    "data",
+    "model-context-protocol",
+    "ukrainian-statistics",
+    "stat-gov-ua"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/ukrainian-stats-mcp-server.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "axios": "^1.7.9",
+    "fast-xml-parser": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
