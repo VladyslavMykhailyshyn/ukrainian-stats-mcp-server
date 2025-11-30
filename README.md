@@ -15,12 +15,58 @@ A Model Context Protocol (MCP) server that provides AI models with seamless acce
 
 ## Installation
 
-### Method 1: Install from GitHub (Recommended for Production)
+### Method 1: Quick Install Using Install Scripts
+
+The easiest way to install locally is using the provided install scripts. These scripts automatically install dependencies, build the project, and make the command globally available.
+
+**Windows (PowerShell)**:
+```powershell
+.\install.ps1
+```
+
+**Windows (Command Prompt)**:
+```cmd
+install.bat
+```
+
+**Linux/macOS**:
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+The install scripts will:
+1. ✅ Check for Node.js (requires version 18 or higher)
+2. 📦 Install all dependencies
+3. 🔨 Build the project
+4. 🔗 Link the command globally (makes `ukrainian-stats-mcp` available system-wide)
+
+After running the install script, add to Claude Desktop configuration:
+
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`  
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "ukrainian-stats": {
+      "command": "ukrainian-stats-mcp"
+    }
+  }
+}
+```
+
+Then restart Claude Desktop and you're ready to use the server!
+
+> **Note**: On Linux/macOS, if you encounter permission issues, you may need to run `sudo ./install.sh` or configure npm to use a user directory (the script will provide instructions).
+
+### Method 2: Install from GitHub
 
 1. **Install globally via npm from GitHub**:
 
 ```bash
-npm install -g git+https://github.com/YOUR_USERNAME/ukrainian-stats-mcp-server.git
+npm install -g git+https://github.com/VladyslavMykhailyshyn/ukrainian-stats-mcp-server.git
 ```
 
 2. **Add to Claude Desktop configuration**:
@@ -40,20 +86,12 @@ npm install -g git+https://github.com/YOUR_USERNAME/ukrainian-stats-mcp-server.g
 
 3. **Restart Claude Desktop** - The server will be ready to use!
 
-### Method 2: Install from npm (Once Published)
-
-```bash
-npm install -g ukrainian-stats-mcp-server
-```
-
-Then use the same Claude Desktop configuration as Method 1.
-
 ### Method 3: Local Development Installation
 
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ukrainian-stats-mcp-server.git
+git clone https://github.com/VladyslavMykhailyshyn/ukrainian-stats-mcp-server.git
 cd ukrainian-stats-mcp-server
 ```
 
@@ -81,65 +119,6 @@ npm run build
   }
 }
 ```
-
-## Publishing to GitHub
-
-To make your MCP server available for others:
-
-1. **Create a new repository on GitHub**:
-   - Go to https://github.com/new
-   - Name it `ukrainian-stats-mcp-server`
-   - Choose public or private
-
-2. **Push your code**:
-
-```bash
-cd f:/ChargeAfter/stat-mcp
-git init
-git add .
-git commit -m "Initial commit: Ukrainian Statistics MCP Server"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/ukrainian-stats-mcp-server.git
-git push -u origin main
-```
-
-3. **Update package.json** with your GitHub username:
-   - Edit the `repository.url` field in `package.json`
-   - Replace `YOUR_USERNAME` with your actual GitHub username
-
-4. **Share the installation command**:
-
-```bash
-npm install -g git+https://github.com/YOUR_USERNAME/ukrainian-stats-mcp-server.git
-```
-
-## Publishing to npm (Optional)
-
-To publish to npm registry:
-
-1. **Create an npm account**: https://www.npmjs.com/signup
-
-2. **Login to npm**:
-
-```bash
-npm login
-```
-
-3. **Publish the package**:
-
-```bash
-npm publish
-```
-
-4. **Users can then install via**:
-
-```bash
-npm install -g ukrainian-stats-mcp-server
-```
-
-> **Note**: Adjust the path to match your installation directory.
-
-After updating the configuration, restart Claude Desktop for the changes to take effect.
 
 ## Available Tools
 
