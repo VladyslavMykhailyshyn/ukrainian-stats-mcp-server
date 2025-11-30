@@ -15,9 +15,46 @@ Model Context Protocol (MCP) сервер, який надає моделям ш
 
 ## Встановлення
 
-### Метод 1: Швидке Встановлення за Допомогою Скриптів Встановлення
+### Метод 1: Встановлення з npm (Рекомендовано)
+
+Найпростіший спосіб встановлення MCP сервера - через npm:
+
+```bash
+npm install -g ukrainian-stats-mcp-server
+```
+
+Після встановлення додайте до конфігурації Claude Desktop:
+
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`  
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "ukrainian-stats": {
+      "command": "ukrainian-stats-mcp"
+    }
+  }
+}
+```
+
+Перезапустіть Claude Desktop і сервер готовий до використання!
+
+> **Примітка**: На Linux/macOS, якщо виникнуть проблеми з дозволами, можливо, знадобиться використати `sudo npm install -g ukrainian-stats-mcp-server` або налаштувати npm для використання користувацької директорії.
+
+### Метод 2: Швидке Встановлення за Допомогою Скриптів Встановлення
 
 Найпростіший спосіб локального встановлення - використання наданих скриптів встановлення. Ці скрипти автоматично встановлюють залежності, збирають проект та роблять команду глобально доступною.
+
+1. **Клонуйте репозиторій**:
+
+```bash
+git clone https://github.com/VladyslavMykhailyshyn/ukrainian-stats-mcp-server.git
+cd ukrainian-stats-mcp-server
+```
+
+2. **Запустіть скрипт встановлення**:
 
 **Windows (PowerShell)**:
 ```powershell
@@ -61,7 +98,7 @@ chmod +x install.sh
 
 > **Примітка**: На Linux/macOS, якщо виникнуть проблеми з дозволами, можливо, знадобиться запустити `sudo ./install.sh` або налаштувати npm для використання користувацької директорії (скрипт надасть інструкції).
 
-### Метод 2: Встановлення з GitHub
+### Метод 3: Встановлення з GitHub
 
 1. **Встановіть глобально через npm з GitHub**:
 
@@ -86,7 +123,7 @@ npm install -g git+https://github.com/VladyslavMykhailyshyn/ukrainian-stats-mcp-
 
 3. **Перезапустіть Claude Desktop** - Сервер готовий до використання!
 
-### Метод 3: Локальне Встановлення для Розробки
+### Метод 4: Локальне Встановлення для Розробки
 
 1. **Клонуйте репозиторій**:
 

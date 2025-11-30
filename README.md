@@ -15,9 +15,46 @@ A Model Context Protocol (MCP) server that provides AI models with seamless acce
 
 ## Installation
 
-### Method 1: Quick Install Using Install Scripts
+### Method 1: Install from npm (Recommended)
+
+The easiest way to install the MCP server is via npm:
+
+```bash
+npm install -g ukrainian-stats-mcp-server
+```
+
+After installation, add to Claude Desktop configuration:
+
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`  
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "ukrainian-stats": {
+      "command": "ukrainian-stats-mcp"
+    }
+  }
+}
+```
+
+Restart Claude Desktop and you're ready to use the server!
+
+> **Note**: On Linux/macOS, if you encounter permission issues, you may need to use `sudo npm install -g ukrainian-stats-mcp-server` or configure npm to use a user directory.
+
+### Method 2: Quick Install Using Install Scripts
 
 The easiest way to install locally is using the provided install scripts. These scripts automatically install dependencies, build the project, and make the command globally available.
+
+1. **Clone the repository**:
+
+```bash
+git clone https://github.com/VladyslavMykhailyshyn/ukrainian-stats-mcp-server.git
+cd ukrainian-stats-mcp-server
+```
+
+2. **Run the install script**:
 
 **Windows (PowerShell)**:
 ```powershell
@@ -61,7 +98,7 @@ Then restart Claude Desktop and you're ready to use the server!
 
 > **Note**: On Linux/macOS, if you encounter permission issues, you may need to run `sudo ./install.sh` or configure npm to use a user directory (the script will provide instructions).
 
-### Method 2: Install from GitHub
+### Method 3: Install from GitHub
 
 1. **Install globally via npm from GitHub**:
 
@@ -86,7 +123,7 @@ npm install -g git+https://github.com/VladyslavMykhailyshyn/ukrainian-stats-mcp-
 
 3. **Restart Claude Desktop** - The server will be ready to use!
 
-### Method 3: Local Development Installation
+### Method 4: Local Development Installation
 
 1. **Clone the repository**:
 
